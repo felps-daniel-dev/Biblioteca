@@ -32,4 +32,5 @@ build/
 ### VS Code ###
 .vscode/
 
-
+##lendo o usuario e a senha do arquivo mas não commitando
+application-local.properties
