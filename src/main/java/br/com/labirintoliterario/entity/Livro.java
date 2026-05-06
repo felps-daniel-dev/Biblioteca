@@ -1,4 +1,4 @@
-package br.com.labirintoliterario.model;
+package br.com.labirintoliterario.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
