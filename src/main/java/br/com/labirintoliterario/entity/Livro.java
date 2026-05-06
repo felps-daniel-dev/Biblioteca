@@ -1,10 +1,13 @@
 package br.com.labirintoliterario.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @Table(name = "Livros")
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Livro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
