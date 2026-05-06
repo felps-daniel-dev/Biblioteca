@@ -1,5 +1,5 @@
 package br.com.labirintoliterario.repository;
-import br.com.labirintoliterario.model.Livro;
+import br.com.labirintoliterario.entity.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
