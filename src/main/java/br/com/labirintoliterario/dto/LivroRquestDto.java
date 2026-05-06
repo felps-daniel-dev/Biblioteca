@@ -1,12 +1,17 @@
 package br.com.labirintoliterario.dto;
 
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record LivroRquestDto<categoria>(
-
-         String titulo,
-         String autor,
-         String isbn,
-        Integer quantidade,
-         String categoria) {
+@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class LivroRquestDto{
+    private String titulo;
+    private String autor;
+    private String isbn;
+    private Integer quantidade;
+    private String categoria;
 }
