@@ -1,5 +1,7 @@
 package br.com.labirintoliterario.dto;
 
+import br.com.labirintoliterario.entity.Cliente;
+import br.com.labirintoliterario.entity.Livro;
 import br.com.labirintoliterario.maper.StatusEmprestimo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmprestimoRepsonseDTO {
+public class EmprestimoRespsonseDTO {
 
     private Long id;
     private Long clienteId;
