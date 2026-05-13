@@ -7,6 +7,8 @@ import br.com.labirintoliterario.entity.Emprestimo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface EmprestimoMapper {
 
@@ -20,5 +22,7 @@ public interface EmprestimoMapper {
     @Mapping(source = "cliente.id", target = "clienteId")
     // converte a entidade em response pra mostra apenas os campos do response
     EmprestimoRespsonseDTO toResponse(Emprestimo emprestimo);
+
+    List<EmprestimoRespsonseDTO> toResponeList(List<Emprestimo> emprestimos);
 
 }

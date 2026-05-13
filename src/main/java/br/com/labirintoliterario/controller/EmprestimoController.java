@@ -1,15 +1,16 @@
 package br.com.labirintoliterario.controller;
 
+import br.com.labirintoliterario.entity.Emprestimo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import br.com.labirintoliterario.dto.EmprestimoRequestDTO;
 import br.com.labirintoliterario.dto.EmprestimoRespsonseDTO;
 import br.com.labirintoliterario.service.EmprestimoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping ("/emprestimo")
@@ -28,4 +29,16 @@ public class EmprestimoController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(empreResponse);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity remover(@PathVariable Long id){
+        service.remover(id);
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping
+    public List<EmprestimoRespsonseDTO> listar(){
+        return service.listar();
+    }
+
 }
