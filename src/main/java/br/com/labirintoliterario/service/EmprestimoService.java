@@ -43,19 +43,26 @@ public class EmprestimoService {
         return mapper.toResponse(emprestimo);
     }
 
-    public ResponseEntity remover(Long id){
+    public void remover(Long id){
         Emprestimo emprestimo = repository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("Emprestimo não encontrado"));
 
         if(emprestimo.getStatus().equals(StatusEmprestimo.ANDAMENTO)){
             throw new IllegalArgumentException("Você não pode excluir um empréstimo que está em andamento");
         }
+        // vai fazer a alteração e salvar no banco
+        emprestimo.setStatus(StatusEmprestimo.CONCLUIDO);
+        repository.save(emprestimo);
         //repository.delete(emprestimo);
-        return ResponseEntity.ok("Emprestimo excluído com sucesso");
     }
 
-    public List<EmprestimoRespsonseDTO> listar(){
+    public List<EmprestimoRespsonseDTO> listarTodos(){
         List<Emprestimo> emprestimos = repository.findAll();
         return mapper.toResponeList(emprestimos);
+    }
+
+    public List<EmprestimoRespsonseDTO> listarPorStatus(StatusEmprestimo status) {
+        List<Emprestimo> emprestimoAndamento = repository.findByStatus(status);
+        return mapper.toResponeList(emprestimoAndamento);
     }
 }
