@@ -14,4 +14,10 @@ public class ClienteResponseDTO {
     private Long id;
     private String nome;
     private String email;
+
+    public void setEndereco(String endereco) {
+    }
+
+    public void setTelefone(String telefone) {
+    }
 }
