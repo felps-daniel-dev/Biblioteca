@@ -25,7 +25,7 @@ public class EmprestimoController {
     //@RequestBody vai transformar o Json em dto
     public ResponseEntity<EmprestimoRespsonseDTO> salvar(@RequestBody EmprestimoRequestDTO dto){
 
-        
+
         EmprestimoRespsonseDTO empreResponse = service.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(empreResponse);
     }
