@@ -1,6 +1,6 @@
 package br.com.labirintoliterario.entity;
 
-import br.com.labirintoliterario.maper.StatusEmprestimo;
+import br.com.labirintoliterario.mapper.StatusEmprestimo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +29,7 @@ public class Emprestimo {
 
     private LocalDateTime dataEmprestimo;
     private LocalDateTime dataVencimento;// Data prevista
-    private LocalDateTime dataDevolucao;  // Fica null até o livro ser entregue
+    private LocalDateTime dataDevolucao; // Fica null até o livro ser entregue
 
     @Enumerated(EnumType.STRING)
     private StatusEmprestimo status;

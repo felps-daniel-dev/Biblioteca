@@ -1,7 +1,7 @@
 package br.com.labirintoliterario.entity;
 
 
-import br.com.labirintoliterario.maper.StatusReserva;
+import br.com.labirintoliterario.mapper.StatusReserva;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
