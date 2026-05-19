@@ -21,8 +21,9 @@ public class Multa {
 
     private BigDecimal valorTotal;// valor total a pagar
 
-    private Integer diasAtraso;
+    private Long diasAtraso;
 
+    //a multa vai ser cauculada apenas para o dia de atraso e não contara jutos ate o dia do pagamento
     private BigDecimal valorDiario;// valor de cada dia atrasado
 
     @Enumerated(EnumType.STRING)

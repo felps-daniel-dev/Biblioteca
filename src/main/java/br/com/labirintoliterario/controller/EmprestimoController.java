@@ -29,14 +29,13 @@ public class EmprestimoController {
     }
 
     @DeleteMapping("/{id}")
-    @Transactional
     public ResponseEntity remover(@PathVariable Long id){
         service.remover(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<EmprestimoRespsonseDTO> realizarDevolucao(@RequestBody Long id){
+    @PutMapping("/devolucao/{id}")
+    public ResponseEntity<EmprestimoRespsonseDTO> realizarDevolucao(@PathVariable Long id){
         return ResponseEntity.ok().body(service.realizarDevolucao(id));
     }
 
