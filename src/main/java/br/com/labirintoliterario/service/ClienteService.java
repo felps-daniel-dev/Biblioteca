@@ -44,6 +44,8 @@ public class ClienteService {
     }
 
     public void deletar(Long id) {
-        repository.deleteById(id);
+        Cliente cliente = repository.findById(id)
+                        .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
+        repository.delete(cliente);
     }
 }
