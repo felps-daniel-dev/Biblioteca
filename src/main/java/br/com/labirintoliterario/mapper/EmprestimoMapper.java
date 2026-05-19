@@ -1,4 +1,4 @@
-package br.com.labirintoliterario.maper;
+package br.com.labirintoliterario.mapper;
 
 
 import br.com.labirintoliterario.dto.EmprestimoRespsonseDTO;

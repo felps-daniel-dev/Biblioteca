@@ -1,6 +1,6 @@
 package br.com.labirintoliterario.controller;
 
-import br.com.labirintoliterario.maper.StatusEmprestimo;
+import br.com.labirintoliterario.mapper.StatusEmprestimo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +24,6 @@ public class EmprestimoController {
     @Transactional
     //@RequestBody vai transformar o Json em dto
     public ResponseEntity<EmprestimoRespsonseDTO> salvar(@RequestBody EmprestimoRequestDTO dto){
-
-
         EmprestimoRespsonseDTO empreResponse = service.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(empreResponse);
     }
@@ -35,6 +33,11 @@ public class EmprestimoController {
     public ResponseEntity remover(@PathVariable Long id){
         service.remover(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EmprestimoRespsonseDTO> realizarDevolucao(@RequestBody Long id){
+        return ResponseEntity.ok().body(service.realizarDevolucao(id));
     }
 
     @GetMapping
@@ -47,5 +50,4 @@ public class EmprestimoController {
         List<EmprestimoRespsonseDTO> lista = service.listarPorStatus(status);
         return ResponseEntity.ok(lista);
     }
-
 }

@@ -1,6 +1,6 @@
 package br.com.labirintoliterario.entity;
 
-import br.com.labirintoliterario.maper.StatusMulta;
+import br.com.labirintoliterario.mapper.StatusMulta;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "multa")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
