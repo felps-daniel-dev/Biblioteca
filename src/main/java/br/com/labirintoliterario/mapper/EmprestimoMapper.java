@@ -17,8 +17,6 @@ public interface EmprestimoMapper {
     //Vai converter o emprestimo request em entidade
     Emprestimo toEntity(EmprestimoRequestDTO request);
 
-    //Falta  a ligiva de busca de cliente e livro
-
     @Mapping(source = "cliente.id", target = "clienteId")
     // converte a entidade em response pra mostra apenas os campos do response
     EmprestimoRespsonseDTO toResponse(Emprestimo emprestimo);

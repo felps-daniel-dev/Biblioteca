@@ -18,7 +18,7 @@ public class MultaResponseDTO {
 
     private Long id;
     private BigDecimal valorTotal;
-    private Integer diasAtraso;
+    private Long diasAtraso;
     private StatusMulta status;
     private Long emprestimo_id;
     private LocalDateTime dataPagamento;
