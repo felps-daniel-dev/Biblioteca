@@ -1,7 +1,7 @@
 package br.com.labirintoliterario.dto;
 
 
-import br.com.labirintoliterario.maper.StatusReserva;
+import br.com.labirintoliterario.mapper.StatusReserva;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,6 @@
 package br.com.labirintoliterario.dto;
 
-import br.com.labirintoliterario.entity.Cliente;
-import br.com.labirintoliterario.entity.Livro;
-import br.com.labirintoliterario.maper.StatusEmprestimo;
+import br.com.labirintoliterario.mapper.StatusEmprestimo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

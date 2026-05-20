@@ -1,4 +1,4 @@
-package br.com.labirintoliterario.maper;
+package br.com.labirintoliterario.mapper;
 
 
 import br.com.labirintoliterario.dto.EmprestimoRespsonseDTO;
@@ -16,8 +16,6 @@ public interface EmprestimoMapper {
     @Mapping(target = "livro", ignore = true)
     //Vai converter o emprestimo request em entidade
     Emprestimo toEntity(EmprestimoRequestDTO request);
-
-    //Falta  a ligiva de busca de cliente e livro
 
     @Mapping(source = "cliente.id", target = "clienteId")
     // converte a entidade em response pra mostra apenas os campos do response

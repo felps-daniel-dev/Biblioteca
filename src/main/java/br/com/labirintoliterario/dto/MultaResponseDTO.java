@@ -1,7 +1,7 @@
 package br.com.labirintoliterario.dto;
 
 
-import br.com.labirintoliterario.maper.StatusMulta;
+import br.com.labirintoliterario.mapper.StatusMulta;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ public class MultaResponseDTO {
 
     private Long id;
     private BigDecimal valorTotal;
-    private Integer diasAtraso;
+    private Long diasAtraso;
     private StatusMulta status;
     private Long emprestimo_id;
     private LocalDateTime dataPagamento;

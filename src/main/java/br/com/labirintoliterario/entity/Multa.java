@@ -1,6 +1,6 @@
 package br.com.labirintoliterario.entity;
 
-import br.com.labirintoliterario.maper.StatusMulta;
+import br.com.labirintoliterario.mapper.StatusMulta;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "multa")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,8 +21,9 @@ public class Multa {
 
     private BigDecimal valorTotal;// valor total a pagar
 
-    private Integer diasAtraso;
+    private Long diasAtraso;
 
+    //a multa vai ser cauculada apenas para o dia de atraso e não contara jutos ate o dia do pagamento
     private BigDecimal valorDiario;// valor de cada dia atrasado
 
     @Enumerated(EnumType.STRING)

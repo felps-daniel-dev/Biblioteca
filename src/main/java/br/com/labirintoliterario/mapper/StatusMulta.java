@@ -1,4 +1,4 @@
-package br.com.labirintoliterario.maper;
+package br.com.labirintoliterario.mapper;
 
 public enum StatusMulta {
     PAGA,

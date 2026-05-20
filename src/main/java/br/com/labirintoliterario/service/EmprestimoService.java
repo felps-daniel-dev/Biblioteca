@@ -2,49 +2,66 @@ package br.com.labirintoliterario.service;
 
 import br.com.labirintoliterario.dto.EmprestimoRespsonseDTO;
 import br.com.labirintoliterario.dto.EmprestimoRequestDTO;
+import br.com.labirintoliterario.dto.MultaResponseDTO;
 import br.com.labirintoliterario.entity.Emprestimo;
-import br.com.labirintoliterario.maper.EmprestimoMapper;
-import br.com.labirintoliterario.maper.StatusEmprestimo;
+import br.com.labirintoliterario.entity.Multa;
+import br.com.labirintoliterario.mapper.EmprestimoMapper;
+import br.com.labirintoliterario.mapper.StatusEmprestimo;
+import br.com.labirintoliterario.repository.ClienteRepository;
 import br.com.labirintoliterario.repository.EmprestimoRepository;
+import br.com.labirintoliterario.repository.LivroRepository;
+import br.com.labirintoliterario.repository.MultaRepositrory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.stylesheets.LinkStyle;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
 public class EmprestimoService {
 
     @Autowired
-    private EmprestimoRepository repository;
-
+    private EmprestimoRepository emprestimoRepository;
     @Autowired
     private EmprestimoMapper mapper;
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private LivroRepository livroRepository;
+
+    @Autowired
+    private MultaService multaService;
+
+
+    @Transactional
     public EmprestimoRespsonseDTO salvar(EmprestimoRequestDTO dto){
 
-        //Transforma o requestDTO em Entity usando o Mapper
         Emprestimo emprestimo = mapper.toEntity(dto);
 
         emprestimo.setDataEmprestimo(LocalDateTime.now());
 
-        //Aqui eu deififni que o a data de vencimento é depois de 7 dias depois do emprestimo
+        livroRepository.findById(emprestimo.getLivro().getId())
+                .orElseThrow(()-> new IllegalArgumentException("Livro não encontrado!"));
+
+        clienteRepository.findById(emprestimo.getCliente().getId())
+                .orElseThrow(()-> new IllegalArgumentException("Cliente não encontrado!"));
+
         emprestimo.setDataVencimento(LocalDateTime.now().plusDays(10));
         emprestimo.setStatus(StatusEmprestimo.ANDAMENTO);
 
-        //dataDevolucao vai ser o dia que a pesso de fato devolver
+        emprestimo = emprestimoRepository.save(emprestimo);
 
-        //salvendo no banco
-        emprestimo = repository.save(emprestimo);
-
-        //tranforma a entidade em response para devolver
         return mapper.toResponse(emprestimo);
     }
 
+    @Transactional
     public void remover(Long id){
-        Emprestimo emprestimo = repository.findById(id)
+        Emprestimo emprestimo = emprestimoRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("Emprestimo não encontrado"));
 
         if(emprestimo.getStatus().equals(StatusEmprestimo.ANDAMENTO)){
@@ -52,17 +69,53 @@ public class EmprestimoService {
         }
         // vai fazer a alteração e salvar no banco
         emprestimo.setStatus(StatusEmprestimo.CONCLUIDO);
-        repository.save(emprestimo);
-        //repository.delete(emprestimo);
+        emprestimoRepository.save(emprestimo);
+        //emprestimoRepository.delete(emprestimo);
     }
 
     public List<EmprestimoRespsonseDTO> listarTodos(){
-        List<Emprestimo> emprestimos = repository.findAll();
+        List<Emprestimo> emprestimos = emprestimoRepository.findAll();
         return mapper.toResponeList(emprestimos);
     }
 
     public List<EmprestimoRespsonseDTO> listarPorStatus(StatusEmprestimo status) {
-        List<Emprestimo> emprestimoAndamento = repository.findByStatus(status);
+        List<Emprestimo> emprestimoAndamento = emprestimoRepository.findByStatus(status);
         return mapper.toResponeList(emprestimoAndamento);
+    }
+
+    @Transactional
+    public EmprestimoRespsonseDTO realizarDevolucao(Long id) {
+
+        BigDecimal valorMulta = new BigDecimal(2.00); // 2 reais por dia
+
+        Emprestimo emprestimo = emprestimoRepository.findById(id)
+                 .orElseThrow(()-> new IllegalArgumentException("Emprestimo não encontrado"));
+
+        if (emprestimo.getStatus().equals(StatusEmprestimo.CONCLUIDO)){
+            throw new IllegalArgumentException("O emprestimo já foi encerrado!");
+        }
+
+        emprestimo.setStatus(StatusEmprestimo.CONCLUIDO);
+        emprestimo.setDataDevolucao(LocalDateTime.now());
+
+        // ccauculo da multa
+        if(emprestimo.getDataDevolucao().isAfter(emprestimo.getDataVencimento())){
+            Long diasDeAtraso = ChronoUnit.DAYS.between(emprestimo.getDataVencimento(), emprestimo.getDataDevolucao());
+
+            //se eu fizer a nova multa retoranando uma multa seria mais eficiente?
+            Multa multa = multaService.novaMulta(emprestimo.getId());
+
+            //buscar multa por id do emprestimo
+             //multaService.buscarMultaPorEmprestimo(emprestimo.getId());
+
+            multa.setDiasAtraso(diasDeAtraso);
+            multa.setValorDiario(valorMulta);// multa fixa de dois reais
+
+            multaService.calculaMulta(multa);
+        }
+
+        emprestimoRepository.save(emprestimo);
+
+        return mapper.toResponse(emprestimo);
     }
 }
