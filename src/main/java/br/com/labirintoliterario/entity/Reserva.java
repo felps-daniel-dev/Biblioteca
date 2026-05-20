@@ -14,14 +14,14 @@ import java.time.LocalDateTime;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reserva {
+public class  Reserva {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
-    private Cliente cleiente;
+    private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "livro_id")
@@ -32,4 +32,10 @@ public class Reserva {
     @Enumerated(EnumType.STRING)
     private StatusReserva status;
 
+    public Object getClienteId() {
+        return null;
+    }
+
+    public Object getLivroId() {
+    }
 }

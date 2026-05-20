@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LivroRquestDto{
+public class LivroRequestDto {
     private String titulo;
     private String autor;
     private String isbn;

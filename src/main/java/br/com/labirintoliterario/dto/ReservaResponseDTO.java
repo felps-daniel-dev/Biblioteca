@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class ReservaResponseDTO {
 
     private Long id;
-    private Long cleiente;
+    private Long cliente;
     private Long livro;
     private LocalDateTime dataReserva;
     private StatusReserva status;

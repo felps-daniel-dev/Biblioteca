@@ -2,6 +2,8 @@ package br.com.labirintoliterario.dto;
 
 
 
+import br.com.labirintoliterario.entity.Cliente;
+import br.com.labirintoliterario.entity.Livro;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,17 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ReservaRequestDTO {
 
-    private Long cleiente;
-    private Long livro;
+    public Long clienteId;
+    private Long livroId;
+
+
+    public Cliente getclienteId() {
+        return null;
+    }
+
+    public Livro LivroId() {
+        return null;
+    }
+
+
 }
