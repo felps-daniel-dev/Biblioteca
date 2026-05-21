@@ -102,7 +102,6 @@ public class EmprestimoService {
         if(emprestimo.getDataDevolucao().isAfter(emprestimo.getDataVencimento())){
             Long diasDeAtraso = ChronoUnit.DAYS.between(emprestimo.getDataVencimento(), emprestimo.getDataDevolucao());
 
-            //se eu fizer a nova multa retoranando uma multa seria mais eficiente?
             Multa multa = multaService.novaMulta(emprestimo.getId());
 
             //buscar multa por id do emprestimo
