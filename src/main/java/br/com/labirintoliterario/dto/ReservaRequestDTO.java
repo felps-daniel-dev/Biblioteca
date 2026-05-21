@@ -23,9 +23,10 @@ public class ReservaRequestDTO {
         return null;
     }
 
-    public Livro LivroId() {
+    public Cliente clienteId() {
         return null;
     }
 
-
+    public Livro livroid() {
+    }
 }
