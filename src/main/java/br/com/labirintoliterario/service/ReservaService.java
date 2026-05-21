@@ -4,7 +4,7 @@ import br.com.labirintoliterario.dto.ReservaRequestDTO;
 import br.com.labirintoliterario.dto.ReservaResponseDTO;
 import br.com.labirintoliterario.entity.Livro;
 import br.com.labirintoliterario.entity.Reserva;
-import br.com.labirintoliterario.maper.StatusReserva;
+import br.com.labirintoliterario.mapper.StatusReserva;
 import br.com.labirintoliterario.repository.LivroRepository;
 import br.com.labirintoliterario.repository.ReservaRepository;
 
