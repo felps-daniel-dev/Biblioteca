@@ -2,8 +2,9 @@ package br.com.labirintoliterario.controller;
 import br.com.labirintoliterario.dto.ReservaRequestDTO;
 import br.com.labirintoliterario.dto.ReservaResponseDTO;
 import br.com.labirintoliterario.entity.Reserva;
-import br.com.labirintoliterario.maper.StatusReserva;
+import br.com.labirintoliterario.mapper.StatusReserva;
 import br.com.labirintoliterario.repository.ReservaRepository;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.mapstruct.Mapping;
@@ -20,6 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @RestController
+@AllArgsConstructor
 
 public class ReservaController {
 
@@ -31,7 +33,7 @@ public class ReservaController {
         Reserva reserva = new Reserva();
 
         reserva.setCliente(dto.clienteId());
-        reserva.setLivro(dto.livroId());
+        reserva.setLivro(dto.livroid());
 
         reserva.setDataReserva(LocalDateTime.now());
         reserva.setStatus(StatusReserva.DISPONIVEL);
@@ -55,7 +57,7 @@ public class ReservaController {
         return reservas.stream()
                 .map(reserva -> new ReservaResponseDTO(
                         reserva.getId(),
-                        reserva.getClienteId(),
+                        (Long) reserva.getClienteId(),
                         reserva.getLivro().getId(),
                         reserva.getDataReserva(),
                         reserva.getStatus()
