@@ -24,7 +24,7 @@ public interface ReservaMapper {
 
     Reserva Toentity(ReservaRequestDTO request);
 
-    @Mapping( source = "Cliente.id", target =  "Cliente.id")
+    @Mapping( source = "Cliente.id", target = "Clienteid")
 
     ReservaResponseDTO Toresponse (Reserva reserva);
 
