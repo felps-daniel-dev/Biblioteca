@@ -4,8 +4,12 @@ import br.com.labirintoliterario.dto.MultaResponseDTO;
 import br.com.labirintoliterario.entity.Multa;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface MultaMapper {
 
     MultaResponseDTO toResponse(Multa multa);
+
+    List<MultaResponseDTO> toResponseList(List<Multa> multas);
 }

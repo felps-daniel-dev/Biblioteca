@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class MultaService {
@@ -39,10 +40,16 @@ public class MultaService {
         return multa;
     }
 
-    public Multa buscarMultaPorEmprestimo(Long id_emprestimo){
+    public MultaResponseDTO buscarMultaPorEmprestimo(Long id_emprestimo){
         Multa multa = multaRepository.findByEmprestimoId(id_emprestimo)
                 .orElseThrow(() -> new IllegalArgumentException("Multa não encontrada!"));
-        return multa;
+        return mapper.toResponse(multa);
+    }
+
+    public MultaResponseDTO buscarMultaPorId(Long id){
+        Multa multa = multaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Multa não encontrada!"));
+        return mapper.toResponse(multa);
     }
 
 
@@ -57,5 +64,9 @@ public class MultaService {
         multaRepository.save(multa);
 
         return valorTotal;
+    }
+
+    public List<MultaResponseDTO> listarMultas() {
+        return mapper.toResponseList(multaRepository.findAll());
     }
 }

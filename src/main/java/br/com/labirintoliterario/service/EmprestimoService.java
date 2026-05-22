@@ -2,15 +2,15 @@ package br.com.labirintoliterario.service;
 
 import br.com.labirintoliterario.dto.EmprestimoRespsonseDTO;
 import br.com.labirintoliterario.dto.EmprestimoRequestDTO;
-import br.com.labirintoliterario.dto.MultaResponseDTO;
+import br.com.labirintoliterario.entity.Cliente;
 import br.com.labirintoliterario.entity.Emprestimo;
+import br.com.labirintoliterario.entity.Livro;
 import br.com.labirintoliterario.entity.Multa;
 import br.com.labirintoliterario.mapper.EmprestimoMapper;
 import br.com.labirintoliterario.mapper.StatusEmprestimo;
 import br.com.labirintoliterario.repository.ClienteRepository;
 import br.com.labirintoliterario.repository.EmprestimoRepository;
 import br.com.labirintoliterario.repository.LivroRepository;
-import br.com.labirintoliterario.repository.MultaRepositrory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmprestimoService {
@@ -45,11 +46,22 @@ public class EmprestimoService {
 
         emprestimo.setDataEmprestimo(LocalDateTime.now());
 
-        livroRepository.findById(emprestimo.getLivro().getId())
+        Livro livro = livroRepository.findById(dto.getLivro())
                 .orElseThrow(()-> new IllegalArgumentException("Livro não encontrado!"));
 
-        clienteRepository.findById(emprestimo.getCliente().getId())
+        Cliente cliente = clienteRepository.findById(dto.getCliente())
                 .orElseThrow(()-> new IllegalArgumentException("Cliente não encontrado!"));
+
+        emprestimo.setLivro(livro);
+        emprestimo.setCliente(cliente);
+
+        // tratamento pra ver se tem alguma quantidade disponivel
+        if(livro.getQuantidade() >= 0){
+            throw new IllegalArgumentException("Este livro não tem nenhuma unidade disponivel!");
+        }
+        livro.setQuantidade(livro.getQuantidade() - 1);
+        livroRepository.save(livro);
+
 
         emprestimo.setDataVencimento(LocalDateTime.now().plusDays(10));
         emprestimo.setStatus(StatusEmprestimo.ANDAMENTO);
@@ -94,6 +106,12 @@ public class EmprestimoService {
         if (emprestimo.getStatus().equals(StatusEmprestimo.CONCLUIDO)){
             throw new IllegalArgumentException("O emprestimo já foi encerrado!");
         }
+
+        Livro livro = livroRepository.findById(emprestimo.getLivro().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Livro não encontrado"));
+        livro.setQuantidade(livro.getQuantidade() + 1);
+        livroRepository.save(livro);
+
 
         emprestimo.setStatus(StatusEmprestimo.CONCLUIDO);
         emprestimo.setDataDevolucao(LocalDateTime.now());
