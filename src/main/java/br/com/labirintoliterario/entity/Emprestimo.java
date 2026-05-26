@@ -1,6 +1,7 @@
 package br.com.labirintoliterario.entity;
 
 import br.com.labirintoliterario.mapper.StatusEmprestimo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,8 +28,11 @@ public class Emprestimo {
     @JoinColumn(name = "livro_id")
     private Livro livro;
 
+    @JsonFormat(pattern = "dd/mm/yyyy")
     private LocalDateTime dataEmprestimo;
+    @JsonFormat(pattern = "dd/mm/yyyy")
     private LocalDateTime dataVencimento;// Data prevista
+    @JsonFormat(pattern = "dd/mm/yyyy")
     private LocalDateTime dataDevolucao; // Fica null até o livro ser entregue
 
     @Enumerated(EnumType.STRING)
