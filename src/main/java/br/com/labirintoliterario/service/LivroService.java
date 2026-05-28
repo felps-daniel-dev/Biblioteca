@@ -4,7 +4,7 @@ package br.com.labirintoliterario.service;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
-import br.com.labirintoliterario.dto.LivroRquestDto;
+import br.com.labirintoliterario.dto.LivroRequestDto;
 import br.com.labirintoliterario.dto.LivroResponseDto;
 import br.com.labirintoliterario.entity.Livro;
 import br.com.labirintoliterario.mapper.LivroMapper;
@@ -26,7 +26,7 @@ public class LivroService {
     }
 
 
-    public LivroResponseDto adicionar(LivroRquestDto dto) {
+    public LivroResponseDto adicionar(LivroRequestDto dto) {
         Livro livro = livroMapper.toEntity(dto);
         Livro salvo = livroRepository.save(livro);
         return livroMapper.toDTO(salvo);
@@ -49,7 +49,7 @@ public class LivroService {
     }
 
 
-    public LivroResponseDto atualizar(Long id, LivroRquestDto dto) {
+    public LivroResponseDto atualizar(Long id, LivroRequestDto dto) {
         Livro livro = livroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
         livro.setTitulo(dto.getTitulo());

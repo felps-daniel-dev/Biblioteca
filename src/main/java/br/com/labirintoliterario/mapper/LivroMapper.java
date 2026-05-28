@@ -1,6 +1,6 @@
 package br.com.labirintoliterario.mapper;
+import br.com.labirintoliterario.dto.LivroRequestDto;
 import org.springframework.stereotype.Component;
-import br.com.labirintoliterario.dto.LivroRquestDto;
 import br.com.labirintoliterario.dto.LivroResponseDto;
 import br.com.labirintoliterario.entity.Livro;
 import org.springframework.stereotype.Component;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LivroMapper {
 
-    public Livro toEntity(LivroRquestDto dto) {
+    public Livro toEntity(LivroRequestDto dto) {
         Livro livro = new Livro();
         livro.setTitulo(dto.getTitulo());
         livro.setAutor(dto.getAutor());

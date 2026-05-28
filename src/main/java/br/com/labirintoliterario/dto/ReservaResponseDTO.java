@@ -1,7 +1,5 @@
 package br.com.labirintoliterario.dto;
 
-
-import br.com.labirintoliterario.entity.Livro;
 import br.com.labirintoliterario.mapper.StatusReserva;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,13 +13,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservaResponseDTO {
-
     private Long id;
     private Long clienteid;
     private Long livro;
     private LocalDateTime dataReserva;
     private StatusReserva status;
-
-    public ReservaResponseDTO(Long id, Object clienteId, Livro livro, LocalDateTime dataReserva, StatusReserva status) {
-    }
 }

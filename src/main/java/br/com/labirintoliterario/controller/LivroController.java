@@ -1,13 +1,11 @@
 package br.com.labirintoliterario.controller;
+import br.com.labirintoliterario.dto.LivroRequestDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import br.com.labirintoliterario.dto.LivroRquestDto;
 import br.com.labirintoliterario.dto.LivroResponseDto;
 import br.com.labirintoliterario.service.LivroService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/livros")
@@ -19,7 +17,7 @@ public class LivroController {
         this.livroService = livroService;
     }
     @PostMapping
-    public ResponseEntity<LivroResponseDto> adicionar(@RequestBody LivroRquestDto dto) {
+    public ResponseEntity<LivroResponseDto> adicionar(@RequestBody LivroRequestDto dto) {
         return ResponseEntity.ok(livroService.adicionar(dto));
     }
 
@@ -34,7 +32,7 @@ public class LivroController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LivroResponseDto> atualizar(@PathVariable Long id, @RequestBody LivroRquestDto dto) {
+    public ResponseEntity<LivroResponseDto> atualizar(@PathVariable Long id, @RequestBody LivroRequestDto dto) {
         return ResponseEntity.ok(livroService.atualizar(id, dto));
     }
 

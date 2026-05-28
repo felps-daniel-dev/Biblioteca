@@ -31,11 +31,4 @@ public class  Reserva {
 
     @Enumerated(EnumType.STRING)
     private StatusReserva status;
-
-    public Object getClienteId() {
-        return null;
-    }
-
-    public Object getLivroId() {
-    }
 }
