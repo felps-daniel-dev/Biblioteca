@@ -1,22 +1,23 @@
 package br.com.labirintoliterario.service;
 
 import br.com.labirintoliterario.dto.MultaResponseDTO;
-import br.com.labirintoliterario.entity.Emprestimo;
 import br.com.labirintoliterario.entity.Multa;
 import br.com.labirintoliterario.mapper.MultaMapper;
 import br.com.labirintoliterario.mapper.StatusMulta;
 import br.com.labirintoliterario.repository.EmprestimoRepository;
-import br.com.labirintoliterario.repository.MultaRepositrory;
+import br.com.labirintoliterario.repository.MultaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class MultaService {
 
     @Autowired
-    private MultaRepositrory multaRepository;
+    private MultaRepository multaRepository;
 
     @Autowired
     private MultaMapper mapper;
@@ -24,29 +25,32 @@ public class MultaService {
     @Autowired
     private EmprestimoRepository emprestimoRepository;
 
-    public Multa  novaMulta(Long emprestimo_id){
+    @Transactional
+    public Multa  novaMulta(Multa multa){
 
-        Emprestimo emprestimo = emprestimoRepository.findById(emprestimo_id)
-                 .orElseThrow(()-> new IllegalArgumentException("Emprestimo não encontrado!"));
-
-        Multa multa = new Multa();
-
-        multa.setEmprestimo(emprestimo);
         multa.setStatus(StatusMulta.NAO_PAGA);
 
-        multaRepository.save(multa);
+        calculaMulta(multa);
+
+        multa = multaRepository.save(multa);
 
         return multa;
     }
 
-    public Multa buscarMultaPorEmprestimo(Long id_emprestimo){
-        Multa multa = multaRepository.findByEmprestimoId(id_emprestimo)
+    public MultaResponseDTO buscarMultaPorEmprestimo(Long emprestimoId){
+        Multa multa = multaRepository.findByEmprestimoId(emprestimoId)
                 .orElseThrow(() -> new IllegalArgumentException("Multa não encontrada!"));
-        return multa;
+        return mapper.toResponse(multa);
     }
 
+    public MultaResponseDTO buscarMultaPorId(Long id){
+        Multa multa = multaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Multa não encontrada!"));
+        return mapper.toResponse(multa);
+    }
 
-    public BigDecimal calculaMulta(Multa multa) {
+    @Transactional
+    public Multa calculaMulta(Multa multa) {
 
         BigDecimal valorDiario = multa.getValorDiario();
         BigDecimal diasAtraso = BigDecimal.valueOf(multa.getDiasAtraso());
@@ -54,8 +58,10 @@ public class MultaService {
         BigDecimal valorTotal = valorDiario.multiply(diasAtraso);
         multa.setValorTotal(valorTotal);
 
-        multaRepository.save(multa);
+        return multa;
+    }
 
-        return valorTotal;
+    public List<MultaResponseDTO> listarMultas() {
+        return mapper.toResponseList(multaRepository.findAll());
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/emprestimo")
+@RequestMapping ("/api/emprestimos")
 public class EmprestimoController {
 
     //Injeção de Dependências--- meio que chamar algum serviço
