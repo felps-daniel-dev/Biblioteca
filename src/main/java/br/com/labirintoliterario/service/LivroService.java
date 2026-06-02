@@ -67,5 +67,9 @@ public class LivroService {
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
 
         livroRepository.delete(livro);
+
+        if (livro.getQuantidade() == 0) {
+            throw new RuntimeException("Não é possível excluir um livro que está emprestado");
+        }
     }
 }
