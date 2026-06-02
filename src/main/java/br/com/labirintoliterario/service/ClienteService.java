@@ -5,6 +5,7 @@ import br.com.labirintoliterario.dto.ClienteResponseDTO;
 import br.com.labirintoliterario.entity.Cliente;
 import br.com.labirintoliterario.mapper.ClienteMapper;
 import br.com.labirintoliterario.repository.ClienteRepository;
+import br.com.labirintoliterario.repository.EmprestimoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository repository;
+
+    @Autowired
+    private EmprestimoRepository emprestimoRepository;
 
     public ClienteResponseDTO criar(ClienteRequestDTO dto) {
         Cliente cliente = ClienteMapper.toEntity(dto);
@@ -44,8 +48,15 @@ public class ClienteService {
     }
 
     public void deletar(Long id) {
+
         Cliente cliente = repository.findById(id)
-                        .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
+
+        if (emprestimoRepository.existsByCliente_Id(id)) {
+            throw new IllegalArgumentException(
+                    "Não é possível excluir um cliente que possui empréstimos.");
+        }
+
         repository.delete(cliente);
     }
 }

@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
 
-    // vai retornar na lista todos de acordo com o status de entrada
+    // Retorna todos os empréstimos com o status informado
     List<Emprestimo> findByStatus(StatusEmprestimo status);
+
+    // Verifica se existe empréstimo para um cliente
+    boolean existsByCliente_Id(Long clienteId);
 }
