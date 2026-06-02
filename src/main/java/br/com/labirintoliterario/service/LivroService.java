@@ -65,6 +65,7 @@ public class LivroService {
     public void excluir(Long id) {
         Livro livro = livroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+
         livroRepository.delete(livro);
     }
 }
